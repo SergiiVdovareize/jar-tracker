@@ -1,6 +1,6 @@
 {
   "name": "jar-tracker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://jar.vdovareize.me",
   "private": true,
   "dependencies": {
