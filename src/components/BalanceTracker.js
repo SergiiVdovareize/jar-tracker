@@ -63,8 +63,6 @@ function BalanceTracker() {
     navigate(`/${id}`);
   };
 
-  if (!changes?.incoming) return null;
-
   return (
     <div className="space-y-4">
       <BalanceInput 

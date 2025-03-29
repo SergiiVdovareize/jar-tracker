@@ -6,7 +6,7 @@ function ChangesList({ changes }) {
   
   const [recentId, setRecentId] = useState(0);
   useEffect(() => {
-    setRecentId(changes[0]?.id);
+    setRecentId(changes?.[0]?.id);
   }, [changes]);
 
   if (!changes) return null;
