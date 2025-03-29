@@ -10,7 +10,11 @@ export const fetchBalanceChanges = async (balanceId) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return await response.json();
+    const data = await response.json();
+    if (!data.success) {
+      throw new Error('API request was not successful');
+    }
+    return data.watch;
   } catch (error) {
     console.error('Error fetching balance changes:', error);
     throw error;

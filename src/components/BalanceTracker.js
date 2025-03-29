@@ -12,9 +12,10 @@ function BalanceTracker() {
   const [isTracking, setIsTracking] = useState(!!urlBalanceId);
 
   const handleFetchChanges = useCallback(async () => {
+    console.log('fetching changes', balanceId);
     try {
       const data = await fetchBalanceChanges(balanceId);
-      setChanges(prevChanges => [...prevChanges, data]);
+      setChanges(data);
     } catch (error) {
       console.error('Failed to fetch balance changes:', error);
     }
@@ -50,7 +51,7 @@ function BalanceTracker() {
         isTracking={isTracking}
         initialValue={urlBalanceId || ''}
       />
-      <ChangesList changes={changes} />
+      <ChangesList changes={changes?.incoming} />
     </div>
   );
 }
