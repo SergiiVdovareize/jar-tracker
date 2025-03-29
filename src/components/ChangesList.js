@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatDate, formatBalance } from '../services/dataFormatter';
+import styles from './ChangesList.module.css';
 
 function ChangesList({ changes }) {
   const calculateChange = (current, previous) => {
@@ -14,26 +15,26 @@ function ChangesList({ changes }) {
   if (!changes) return null;
 
   return (
-    <div className="mt-4">
-      <h2 className="text-xl font-semibold mb-4">Balance Changes</h2>
-      <div className="space-y-4">
+    <div className={styles.container}>
+      <h2 className={styles.title}>Balance Changes</h2>
+      <div className={styles.changesList}>
         {changes.map((change, index) => {
           const previousChange = index < changes.length - 1 ? changes[index + 1] : null;
           const changeInfo = calculateChange(change.balance, previousChange?.balance);
 
           return (
-            <div key={change.id} className="border p-4 rounded-lg shadow-sm">
-              <div className="flex justify-between items-start">
+            <div key={change.id} className={styles.changeItem}>
+              <div className={styles.changeContent}>
                 <div>
-                  <p className="text-sm text-gray-500">
+                  <p className={styles.timestamp}>
                     {formatDate(change.trackedAt)}
                   </p>
-                  <p className="text-lg font-semibold mt-1">
+                  <p className={styles.balance}>
                     {formatBalance(change.balance)}
                   </p>
                 </div>
                 {changeInfo && (
-                  <div className={`text-sm ${changeInfo.isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                  <div className={`${styles.changeAmount} ${changeInfo.isPositive ? styles.positive : styles.negative}`}>
                     <p>{formatBalance(changeInfo.amount)}</p>
                   </div>
                 )}

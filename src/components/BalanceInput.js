@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './BalanceInput.module.css';
 
 function BalanceInput({ onSubmit, isTracking, initialValue = '' }) {
   const [inputValue, setInputValue] = useState(initialValue);
@@ -13,17 +14,18 @@ function BalanceInput({ onSubmit, isTracking, initialValue = '' }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-2">
+    <form onSubmit={handleSubmit} className={styles.form}>
       <input
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Enter Balance ID"
-        className="border p-2 rounded"
+        className={styles.input}
       />
       <button 
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className={styles.button}
+        disabled={isTracking}
       >
         {isTracking ? 'Tracking...' : 'Start Tracking'}
       </button>
