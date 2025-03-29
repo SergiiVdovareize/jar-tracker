@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function BalanceInput({ onSubmit, isTracking }) {
-  const [inputValue, setInputValue] = useState('');
+function BalanceInput({ onSubmit, isTracking, initialValue = '' }) {
+  const [inputValue, setInputValue] = useState(initialValue);
+
+  useEffect(() => {
+    setInputValue(initialValue);
+  }, [initialValue]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
