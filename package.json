@@ -1,6 +1,7 @@
 {
   "name": "jar-tracker",
   "version": "0.1.0",
+  "homepage": "https://jar.vdovareize.me",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
