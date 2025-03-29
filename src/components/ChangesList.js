@@ -4,14 +4,11 @@ import styles from './ChangesList.module.css';
 
 function ChangesList({ changes }) {
   
-  const [recentId, setRecentId] = useState(changes[0]?.id);
+  const [recentId, setRecentId] = useState(0);
   useEffect(() => {
-    console.log('changes')
     setRecentId(changes[0]?.id);
   }, [changes]);
 
-  console.log(recentId)
-  
   if (!changes) return null;
 
   return (
