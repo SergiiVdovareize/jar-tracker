@@ -1,17 +1,17 @@
-import React from 'react';
-import { formatDate, formatBalance } from '../services/dataFormatter';
+import React, { useState, useEffect } from 'react';
+import ChangeListItem from './ChangeListItem';
 import styles from './ChangesList.module.css';
 
 function ChangesList({ changes }) {
-  const calculateChange = (current, previous) => {
-    if (!previous) return null;
-    const diff = current - previous;
-    return {
-      amount: diff,
-      isPositive: diff > 0
-    };
-  };
+  
+  const [recentId, setRecentId] = useState(changes[0]?.id);
+  useEffect(() => {
+    console.log('changes')
+    setRecentId(changes[0]?.id);
+  }, [changes]);
 
+  console.log(recentId)
+  
   if (!changes) return null;
 
   return (
@@ -20,26 +20,14 @@ function ChangesList({ changes }) {
       <div className={styles.changesList}>
         {changes.map((change, index) => {
           const previousChange = index < changes.length - 1 ? changes[index + 1] : null;
-          const changeInfo = calculateChange(change.balance, previousChange?.balance);
 
           return (
-            <div key={change.id} className={styles.changeItem}>
-              <div className={styles.changeContent}>
-                <div>
-                  <p className={styles.timestamp}>
-                    {formatDate(change.trackedAt)}
-                  </p>
-                  <p className={styles.balance}>
-                    {formatBalance(change.balance)}
-                  </p>
-                </div>
-                {changeInfo && (
-                  <div className={`${styles.changeAmount} ${changeInfo.isPositive ? styles.positive : styles.negative}`}>
-                    <p>{formatBalance(changeInfo.amount)}</p>
-                  </div>
-                )}
-              </div>
-            </div>
+            <ChangeListItem
+              key={change.id}
+              change={change}
+              previousChange={previousChange}
+              isNew={change.id === recentId}
+            />
           );
         })}
       </div>

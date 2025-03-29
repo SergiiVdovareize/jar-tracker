@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './BalanceInput.module.css';
 
-function BalanceInput({ onSubmit, isTracking, initialValue = '' }) {
+function BalanceInput({ onSubmit, isTracking, initialValue = '', countdown }) {
   const [inputValue, setInputValue] = useState(initialValue);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function BalanceInput({ onSubmit, isTracking, initialValue = '' }) {
         className={styles.button}
         disabled={isTracking}
       >
-        {isTracking ? 'Tracking...' : 'Start Tracking'}
+        {isTracking ? `Tracking...` : 'Start Tracking'}
       </button>
     </form>
   );
