@@ -54,6 +54,14 @@ function BalanceTracker() {
     };
   }, []);
 
+  useEffect(() => {
+    if (changes?.jar?.title) {
+      document.title = `${changes.jar.title} - Jar Tracker`;
+    } else {
+      document.title = 'Jar Tracker';
+    }
+  }, [changes?.jar?.title]);
+
   const handleStartTracking = input => {
     let id = input;
     const urlPattern = /(https:\/\/)?send\.monobank\.ua\/jar\/([a-zA-Z0-9]+)/;
