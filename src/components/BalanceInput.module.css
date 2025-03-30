@@ -27,7 +27,7 @@
 }
 
 .button {
-  background-color: #3b82f6;
+  background-color: #0d8638;
   color: white;
   padding: 0.8rem;
   border-radius: 4px;
@@ -39,13 +39,13 @@
 }
 
 .button:hover {
-  background-color: #2563eb;
+  background-color: #0b692c;
 }
 
-.button:disabled {
+/* .button:disabled {
   background-color: #93c5fd;
   cursor: not-allowed;
-}
+} */
 
 @media (max-width: 600px) {
   .formWrapper {
