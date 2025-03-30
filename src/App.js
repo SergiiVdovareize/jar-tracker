@@ -35,7 +35,7 @@ function App() {
       <NavigationTracker />
       <div className={styles['main-container']}>
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-bold mb-6">Трекер банки</h1>
+          <h1 className={styles['title']}>Трекер банки</h1>
           <Routes>
             <Route path="/" element={<BalanceTracker />} />
             <Route path="/:balanceId" element={<BalanceTracker />} />

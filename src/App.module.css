@@ -1,5 +1,9 @@
 .main-container {
-  padding: 30px;
+  padding: 1em;
   max-width: 800px;
   margin: 0 auto;
+}
+
+.title {
+  margin-top: 0;
 }
