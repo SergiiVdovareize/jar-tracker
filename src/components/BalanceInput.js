@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './BalanceInput.module.css';
 
-function BalanceInput({ onSubmit, isTracking, initialValue = '', countdown }) {
+function BalanceInput({ onSubmit, initialValue = '' }) {
   const [inputValue, setInputValue] = useState(initialValue);
 
   useEffect(() => {
@@ -15,20 +15,21 @@ function BalanceInput({ onSubmit, isTracking, initialValue = '', countdown }) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Enter Balance ID"
-        className={styles.input}
-      />
-      <button 
-        type="submit"
-        className={styles.button}
-        disabled={isTracking}
-      >
-        {isTracking ? `Tracking...` : 'Start Tracking'}
-      </button>
+      <div className={styles.formWrapper}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="уведіть id або посилання банки"
+          className={styles.input}
+        />
+        <button 
+          type="submit"
+          className={styles.button}
+        >
+          Відстежувати
+        </button>
+      </div>
     </form>
   );
 }

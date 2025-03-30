@@ -26,7 +26,7 @@ function ChangeListItem({ change, previousChange, isNew }) {
           </p>
         </div>
         {changeInfo && (
-          <div className={`${styles.changeAmount} ${changeInfo.isPositive ? styles.positive : styles.negative}`}>
+          <div className={styles.changeAmount}>
             <p>{formatBalance(changeInfo.amount)}</p>
           </div>
         )}

@@ -1,15 +1,12 @@
 .container {
   margin-top: 1rem;
   background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .title {
   font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 1rem;
-  padding: 0 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .changesList {

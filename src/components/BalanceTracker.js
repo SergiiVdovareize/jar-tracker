@@ -4,8 +4,8 @@ import BalanceInput from './BalanceInput';
 import ChangesList from './ChangesList';
 import { fetchBalanceChanges } from '../services/balanceService';
 
-const FETCH_INTERVAL = 12;
-const FETCH_INTERVAL_MS = 12 * 1000;
+const FETCH_INTERVAL = 60;
+const FETCH_INTERVAL_MS = FETCH_INTERVAL * 1000;
 
 function BalanceTracker() {
   const { balanceId: urlBalanceId } = useParams();
@@ -13,14 +13,11 @@ function BalanceTracker() {
   const [balanceId, setBalanceId] = useState(urlBalanceId || '');
   const [changes, setChanges] = useState([]);
   const [isTracking, setIsTracking] = useState(!!urlBalanceId);
-  const [countdown, setCountdown] = useState(FETCH_INTERVAL);
 
   const handleFetchChanges = useCallback(async () => {
     try {
       const data = await fetchBalanceChanges(balanceId);
       setChanges(data);
-      
-      setCountdown(FETCH_INTERVAL); // Reset countdown after successful fetch
     } catch (error) {
       console.error('Failed to fetch balance changes:', error);
     }
@@ -34,16 +31,6 @@ function BalanceTracker() {
       handleFetchChanges();
       interval = setInterval(() => {
         handleFetchChanges();
-      }, FETCH_INTERVAL_MS);
-
-      // Start countdown
-      countdownTimer = setInterval(() => {
-        setCountdown(prev => {
-          if (prev <= 1) {
-            return FETCH_INTERVAL;
-          }
-          return prev - 1;
-        });
       }, FETCH_INTERVAL_MS);
     }
 
@@ -69,7 +56,6 @@ function BalanceTracker() {
         onSubmit={handleStartTracking} 
         isTracking={isTracking}
         initialValue={urlBalanceId || ''}
-        // countdown={countdown}
       />
       <ChangesList changes={changes.incoming} />
     </div>

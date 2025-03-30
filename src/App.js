@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import BalanceTracker from './components/BalanceTracker';
-import './App.css';
+import styles from './App.module.css';
 
 function NavigationTracker() {
   // const location = useLocation();
@@ -33,9 +33,9 @@ function App() {
   return (
     <Router>
       <NavigationTracker />
-      <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className={styles['main-container']}>
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-bold mb-6">Balance Tracker</h1>
+          <h1 className="text-2xl font-bold mb-6">Трекер банки</h1>
           <Routes>
             <Route path="/" element={<BalanceTracker />} />
             <Route path="/:balanceId" element={<BalanceTracker />} />

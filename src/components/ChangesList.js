@@ -11,15 +11,14 @@ function ChangesList({ changes }) {
 
   if (!changes) return null;
 
+  const data = changes.length > 5 ? changes.slice(0, changes.length-1) : changes;
+
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Balance Changes</h2>
+      <h2 className={styles.title}>Історія</h2>
+      
       <div className={styles.changesList}>
-        {changes.map((change, index) => {
-          if (changes.length > 5 && index === 0) {
-            return null;
-          }
-          
+        {data.map((change, index) => {
           const previousChange = index < changes.length - 1 ? changes[index + 1] : null;
 
           return (
