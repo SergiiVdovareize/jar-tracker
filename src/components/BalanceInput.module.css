@@ -12,7 +12,7 @@
 }
 
 .input {
-  border: 1px solid #e5e7eb;
+  border: 1px solid #a9a9a9;
   padding: 0.8rem;
   border-radius: 4px;
   font-size: 1rem;
@@ -22,8 +22,8 @@
 
 .input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  border-color: #01521e;
+  box-shadow: 0 0 2px 2px #01521e34;
 }
 
 .button {

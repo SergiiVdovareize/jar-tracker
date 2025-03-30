@@ -36,15 +36,12 @@
 }
 
 .highlight {
-  animation: highlightRow 10s ease-out;
+  animation: highlightRow 8s ease-out;
 }
 
 @keyframes highlightRow {
   0% {
-    background-color: rgba(59, 130, 246, 0.2);
-  }
-  50% {
-    background-color: rgba(59, 130, 246, 0.1);
+    background-color: #0f860d2b;
   }
   100% {
     background-color: transparent;
