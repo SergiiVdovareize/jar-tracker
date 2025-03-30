@@ -34,14 +34,11 @@ function App() {
     <Router>
       <NavigationTracker />
       <div className={styles['main-container']}>
-        <div className="max-w-4xl mx-auto">
-          <h1 className={styles['title']}>Трекер банки</h1>
-          <Routes>
-            <Route path="/" element={<BalanceTracker />} />
-            <Route path="/:balanceId" element={<BalanceTracker />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<BalanceTracker />} />
+          <Route path="/:balanceId" element={<BalanceTracker />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </div>
     </Router>
   );
