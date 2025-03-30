@@ -3,7 +3,6 @@ import ChangeListItem from './ChangeListItem';
 import styles from './ChangesList.module.css';
 
 function ChangesList({ changes }) {
-  
   const [recentId, setRecentId] = useState(0);
   useEffect(() => {
     setRecentId(changes?.[0]?.id);
@@ -11,12 +10,12 @@ function ChangesList({ changes }) {
 
   if (!changes) return null;
 
-  const data = changes.length > 5 ? changes.slice(0, changes.length-1) : changes;
+  const data = changes.length > 5 ? changes.slice(0, changes.length - 1) : changes;
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Історія</h2>
-      
+
       <div className={styles.changesList}>
         {data.map((change, index) => {
           const previousChange = index < changes.length - 1 ? changes[index + 1] : null;
@@ -35,4 +34,4 @@ function ChangesList({ changes }) {
   );
 }
 
-export default ChangesList; 
+export default ChangesList;

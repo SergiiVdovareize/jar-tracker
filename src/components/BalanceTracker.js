@@ -43,7 +43,7 @@ function BalanceTracker() {
     };
   }, [balanceId, handleFetchChanges]);
 
-  const handleStartTracking = (input) => {
+  const handleStartTracking = input => {
     let id = input;
     const urlPattern = /(https:\/\/)?send\.monobank\.ua\/jar\/([a-zA-Z0-9]+)/;
     const match = input.match(urlPattern);
@@ -58,13 +58,10 @@ function BalanceTracker() {
 
   return (
     <div className="space-y-4">
-      <BalanceInput 
-        onSubmit={handleStartTracking} 
-        initialValue={urlBalanceId || ''}
-      />
+      <BalanceInput onSubmit={handleStartTracking} initialValue={urlBalanceId || ''} />
       <ChangesList changes={changes.incoming} />
     </div>
   );
 }
 
-export default BalanceTracker; 
+export default BalanceTracker;

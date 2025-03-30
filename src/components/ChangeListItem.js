@@ -8,7 +8,7 @@ function ChangeListItem({ change, previousChange, isNew }) {
     const diff = current - previous;
     return {
       amount: diff,
-      isPositive: diff > 0
+      isPositive: diff > 0,
     };
   };
 
@@ -18,12 +18,8 @@ function ChangeListItem({ change, previousChange, isNew }) {
     <div className={`${styles.changeItem} ${isNew ? styles.highlight : ''}`}>
       <div className={styles.changeContent}>
         <div>
-          <p className={styles.timestamp}>
-            {formatDate(change.trackedAt)}
-          </p>
-          <p className={styles.balance}>
-            {formatBalance(change.balance)}
-          </p>
+          <p className={styles.timestamp}>{formatDate(change.trackedAt)}</p>
+          <p className={styles.balance}>{formatBalance(change.balance)}</p>
         </div>
         {changeInfo && (
           <div className={styles.changeAmount}>
@@ -35,4 +31,4 @@ function ChangeListItem({ change, previousChange, isNew }) {
   );
 }
 
-export default ChangeListItem; 
+export default ChangeListItem;

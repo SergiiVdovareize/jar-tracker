@@ -11,7 +11,7 @@ function NavigationTracker() {
   //   const prevLocation = prevLocationRef.current;
   //   const currentIndex = window.history.state?.idx || 0;
   //   const prevIndex = prevLocation.state?.idx || 0;
-    
+
   //   const direction = currentIndex > prevIndex ? 'forward' : 'back';
 
   //   console.log('Navigation occurred:', {

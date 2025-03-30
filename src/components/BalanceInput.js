@@ -8,7 +8,7 @@ function BalanceInput({ onSubmit, initialValue = '' }) {
     setInputValue(initialValue);
   }, [initialValue]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     onSubmit(inputValue);
   };
@@ -19,14 +19,11 @@ function BalanceInput({ onSubmit, initialValue = '' }) {
         <input
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={e => setInputValue(e.target.value)}
           placeholder="уведіть id або посилання банки"
           className={styles.input}
         />
-        <button 
-          type="submit"
-          className={styles.button}
-        >
+        <button type="submit" className={styles.button}>
           Відстежувати
         </button>
       </div>
@@ -34,4 +31,4 @@ function BalanceInput({ onSubmit, initialValue = '' }) {
   );
 }
 
-export default BalanceInput; 
+export default BalanceInput;

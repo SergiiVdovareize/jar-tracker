@@ -45,7 +45,7 @@
 .button:disabled {
   background-color: #93c5fd;
   cursor: not-allowed;
-} 
+}
 
 @media (max-width: 600px) {
   .formWrapper {
