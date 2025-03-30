@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import BalanceTracker from './components/BalanceTracker';
 import styles from './App.module.css';
 
