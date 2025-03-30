@@ -16,6 +16,10 @@ function ChangesList({ changes }) {
       <h2 className={styles.title}>Balance Changes</h2>
       <div className={styles.changesList}>
         {changes.map((change, index) => {
+          if (changes.length > 5 && index === 0) {
+            return null;
+          }
+          
           const previousChange = index < changes.length - 1 ? changes[index + 1] : null;
 
           return (
