@@ -12,6 +12,7 @@ function BalanceTracker() {
   const navigate = useNavigate();
   const [balanceId, setBalanceId] = useState(urlBalanceId || '');
   const [changes, setChanges] = useState([]);
+  const [isTabActive, setIsTabActive] = useState(true);
 
   const handleFetchChanges = useCallback(async () => {
     try {
@@ -24,9 +25,8 @@ function BalanceTracker() {
 
   useEffect(() => {
     let interval;
-    let countdownTimer;
 
-    if (balanceId) {
+    if (balanceId && isTabActive) {
       handleFetchChanges();
       interval = setInterval(() => {
         handleFetchChanges();
@@ -37,11 +37,20 @@ function BalanceTracker() {
       if (interval) {
         clearInterval(interval);
       }
-      if (countdownTimer) {
-        clearInterval(countdownTimer);
-      }
     };
-  }, [balanceId, handleFetchChanges]);
+  }, [balanceId, handleFetchChanges, isTabActive]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsTabActive(document.visibilityState === 'visible');
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   const handleStartTracking = input => {
     let id = input;
