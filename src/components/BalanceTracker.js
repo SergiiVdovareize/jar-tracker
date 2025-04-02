@@ -17,7 +17,6 @@ function BalanceTracker() {
 
   const handleFetchChanges = useCallback(async () => {
     try {
-      setChanges({});
       const data = await fetchBalanceChanges(balanceId);
       setChanges(data);
     } catch (error) {
@@ -71,6 +70,9 @@ function BalanceTracker() {
       id = match[2];
     }
 
+    if (balanceId !== id) {
+      setChanges({});
+    }
     setBalanceId(id);
     navigate(`/${id}`);
   };
