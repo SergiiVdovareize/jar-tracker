@@ -36,11 +36,14 @@
 }
 
 .highlight {
-  animation: highlightRow 8s ease-out;
+  animation: highlightRow 12s ease-out;
 }
 
 @keyframes highlightRow {
   0% {
+    background-color: #0f860d2b;
+  }
+  80% {
     background-color: #0f860d2b;
   }
   100% {

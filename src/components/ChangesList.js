@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ChangeListItem from './ChangeListItem';
 import styles from './ChangesList.module.css';
 
-function ChangesList({ changes }) {
-  const [recentId, setRecentId] = useState(0);
-  useEffect(() => {
-    setRecentId(changes?.[0]?.id);
-  }, [changes]);
-
+function ChangesList({ changes, recentIncomingId }) {
   if (!changes) return null;
 
   const data = changes.length > 5 ? changes.slice(0, changes.length - 1) : changes;
@@ -25,7 +20,7 @@ function ChangesList({ changes }) {
               key={change.id}
               change={change}
               previousChange={previousChange}
-              isNew={change.id === recentId}
+              isNew={change.id > recentIncomingId}
             />
           );
         })}

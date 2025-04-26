@@ -4,6 +4,7 @@ import BalanceInput from './BalanceInput';
 import ChangesList from './ChangesList';
 import styles from './BalanceTracker.module.css';
 import { fetchBalanceChanges } from '../services/balanceService';
+import { saveToLocalStorage, readFromLocalStorage } from '../utils/localStorageHelper';
 
 const FETCH_INTERVAL = 60;
 const FETCH_INTERVAL_MS = FETCH_INTERVAL * 1000;
@@ -14,9 +15,14 @@ function BalanceTracker() {
   const [balanceId, setBalanceId] = useState(urlBalanceId || '');
   const [changes, setChanges] = useState([]);
   const [isTabActive, setIsTabActive] = useState(true);
+  const [recentId, setRecentId] = useState(0);
+  const [previousRecentId, setPreviousRecentId] = useState(0);
 
   const handleFetchChanges = useCallback(async () => {
     try {
+      const recent = readFromLocalStorage('recent-incoming', balanceId)
+      setPreviousRecentId(recent)
+      setRecentId(recent)
       const data = await fetchBalanceChanges(balanceId);
       setChanges(data);
     } catch (error) {
@@ -61,6 +67,17 @@ function BalanceTracker() {
     }
   }, [changes?.jar?.title]);
 
+  useEffect(() => {
+    if (!changes?.incoming?.length || !changes?.account?.trackId) {
+      return
+    }
+
+    setPreviousRecentId(recentId)
+    const recent = changes?.incoming?.[0].id
+    setRecentId(recent)
+    saveToLocalStorage('recent-incoming', recent, changes?.account?.trackId)
+  }, [changes?.incoming?.[0].id]);
+
   const handleStartTracking = input => {
     let id = input;
     const urlPattern = /(https:\/\/)?send\.monobank\.ua\/jar\/([a-zA-Z0-9]+)/;
@@ -88,7 +105,7 @@ function BalanceTracker() {
         <h2 className={styles['title']}>Трекер банки</h2>
       )}
       <BalanceInput onSubmit={handleStartTracking} initialValue={urlBalanceId || ''} />
-      <ChangesList changes={changes.incoming} />
+      <ChangesList changes={changes.incoming} recentIncomingId={previousRecentId}/>
     </div>
   );
 }
