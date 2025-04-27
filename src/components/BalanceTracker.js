@@ -76,7 +76,7 @@ function BalanceTracker() {
     const recent = changes?.incoming?.[0].id
     setRecentId(recent)
     saveToLocalStorage('recent-incoming', recent, changes?.account?.trackId)
-  }, [changes?.incoming?.[0].id]);
+  }, [changes?.incoming?.[0]?.id]);
 
   const handleStartTracking = input => {
     let id = input;
@@ -106,8 +106,6 @@ function BalanceTracker() {
       )}
       <BalanceInput onSubmit={handleStartTracking} initialValue={urlBalanceId || ''} />
       <ChangesList changes={changes.incoming} recentIncomingId={previousRecentId}/>
-      
-      <button onClick={() => {throw new Error("This is your first error!");}}>Break the world</button>
     </div>
   );
 }
