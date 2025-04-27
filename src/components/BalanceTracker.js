@@ -106,6 +106,8 @@ function BalanceTracker() {
       )}
       <BalanceInput onSubmit={handleStartTracking} initialValue={urlBalanceId || ''} />
       <ChangesList changes={changes.incoming} recentIncomingId={previousRecentId}/>
+      
+      <button onClick={() => {throw new Error("This is your first error!");}}>Break the world</button>
     </div>
   );
 }
