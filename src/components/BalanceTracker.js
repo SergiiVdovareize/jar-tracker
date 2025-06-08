@@ -20,9 +20,9 @@ function BalanceTracker() {
 
   const handleFetchChanges = useCallback(async () => {
     try {
-      const recent = readFromLocalStorage('recent-incoming', balanceId)
-      setPreviousRecentId(recent)
-      setRecentId(recent)
+      const recent = readFromLocalStorage('recent-incoming', balanceId);
+      setPreviousRecentId(recent);
+      setRecentId(recent);
       const data = await fetchBalanceChanges(balanceId);
       setChanges(data);
     } catch (error) {
@@ -69,13 +69,13 @@ function BalanceTracker() {
 
   useEffect(() => {
     if (!changes?.incoming?.length || !changes?.account?.trackId) {
-      return
+      return;
     }
 
-    setPreviousRecentId(recentId)
-    const recent = changes?.incoming?.[0].id
-    setRecentId(recent)
-    saveToLocalStorage('recent-incoming', recent, changes?.account?.trackId)
+    setPreviousRecentId(recentId);
+    const recent = changes?.incoming?.[0].id;
+    setRecentId(recent);
+    saveToLocalStorage('recent-incoming', recent, changes?.account?.trackId);
   }, [changes?.incoming?.[0]?.id]);
 
   const handleStartTracking = input => {
@@ -105,7 +105,7 @@ function BalanceTracker() {
         <h2 className={styles['title']}>Трекер банки</h2>
       )}
       <BalanceInput onSubmit={handleStartTracking} initialValue={urlBalanceId || ''} />
-      <ChangesList changes={changes.incoming} recentIncomingId={previousRecentId}/>
+      <ChangesList changes={changes.incoming} recentIncomingId={previousRecentId} />
     </div>
   );
 }

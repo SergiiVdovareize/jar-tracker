@@ -29,33 +29,8 @@
     "format": "prettier --write \"src/**/*.{js,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{js,css,md}\"",
     "validate": "npm run lint && npm run format:check",
+    "validate:fix": "npm run lint:fix && npm run format",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org home-sr9 --project jar-tracker ./build && sentry-cli sourcemaps upload --org home-sr9 --project jar-tracker ./build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:jsx-a11y/recommended",
-      "prettier"
-    ],
-    "plugins": [
-      "react",
-      "react-hooks",
-      "jsx-a11y"
-    ],
-    "rules": {
-      "react/react-in-jsx-scope": "off",
-      "react/prop-types": "off",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    }
   },
   "browserslist": {
     "production": [
@@ -70,12 +45,11 @@
     ]
   },
   "devDependencies": {
+    "@eslint/js": "^9.28.0",
     "eslint": "^9.28.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
     "gh-pages": "^6.3.0",
+    "globals": "^16.2.0",
     "prettier": "^3.5.3"
   }
 }
