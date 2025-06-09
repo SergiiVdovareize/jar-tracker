@@ -21,6 +21,7 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           placeholder="уведіть id або посилання банки"
+          disabled={loading}
           className={styles.input}
         />
         <button type="submit" className={styles.button} disabled={loading}>
