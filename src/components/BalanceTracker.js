@@ -17,15 +17,19 @@ function BalanceTracker() {
   const [isTabActive, setIsTabActive] = useState(true);
   const [recentId, setRecentId] = useState(0);
   const [previousRecentId, setPreviousRecentId] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleFetchChanges = useCallback(async () => {
     try {
+      setLoading(true);
       const recent = readFromLocalStorage('recent-incoming', balanceId);
       setPreviousRecentId(recent);
       setRecentId(recent);
       const data = await fetchBalanceChanges(balanceId);
       setChanges(data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error('Failed to fetch balance changes:', error);
     }
   }, [balanceId]);
@@ -104,7 +108,11 @@ function BalanceTracker() {
       ) : (
         <h2 className={styles['title']}>Трекер банки</h2>
       )}
-      <BalanceInput onSubmit={handleStartTracking} initialValue={urlBalanceId || ''} />
+      <BalanceInput
+        onSubmit={handleStartTracking}
+        initialValue={urlBalanceId || ''}
+        loading={loading}
+      />
       <ChangesList changes={changes.incoming} recentIncomingId={previousRecentId} />
     </div>
   );

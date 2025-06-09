@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './BalanceInput.module.css';
 
-function BalanceInput({ onSubmit, initialValue = '' }) {
+function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
   const [inputValue, setInputValue] = useState(initialValue);
 
   useEffect(() => {
@@ -23,8 +23,8 @@ function BalanceInput({ onSubmit, initialValue = '' }) {
           placeholder="уведіть id або посилання банки"
           className={styles.input}
         />
-        <button type="submit" className={styles.button}>
-          Відстежувати
+        <button type="submit" className={styles.button} disabled={loading}>
+          {loading ? 'Завантаження...' : 'Відстежувати'}
         </button>
       </div>
     </form>

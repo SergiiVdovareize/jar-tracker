@@ -42,10 +42,10 @@
   background-color: #0b692c;
 }
 
-/* .button:disabled {
-  background-color: #93c5fd;
+.button:disabled {
+  background-color: #75847a;
   cursor: not-allowed;
-} */
+}
 
 @media (max-width: 600px) {
   .formWrapper {
