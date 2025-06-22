@@ -82,6 +82,14 @@ function BalanceTracker() {
     saveToLocalStorage('recent-incoming', recent, changes?.account?.trackId);
   }, [changes?.incoming?.[0]?.id]);
 
+  useEffect(() => {
+    const themeColor = document.querySelector('meta[name="theme-color"]');
+    if (themeColor) {
+      const color = loading ? '#75847a' : '#0d8638';
+      themeColor.setAttribute('content', color);
+    }
+  }, [loading]);
+
   const handleStartTracking = input => {
     let id = input;
     const urlPattern = /(https:\/\/)?send\.monobank\.ua\/jar\/([a-zA-Z0-9]+)/;
