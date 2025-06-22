@@ -13,6 +13,10 @@ function ChangeListItem({ change, previousChange, isNew }) {
   };
 
   const changeInfo = calculateChange(change.balance, previousChange?.balance);
+  const classList = [styles.changeAmount];
+  if (changeInfo.amount < 0) {
+    classList.push(styles.negativeAmount);
+  }
 
   return (
     <div className={`${styles.changeItem} ${isNew ? styles.highlight : ''}`}>
@@ -22,7 +26,7 @@ function ChangeListItem({ change, previousChange, isNew }) {
           <p className={styles.balance}>{formatBalance(change.balance)}</p>
         </div>
         {changeInfo && (
-          <div className={styles.changeAmount}>
+          <div className={classList.join(' ')}>
             <p>{formatBalance(changeInfo.amount)}</p>
           </div>
         )}

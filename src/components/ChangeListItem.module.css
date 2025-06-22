@@ -35,6 +35,10 @@
   color: #0d8638;
 }
 
+.changeAmount.negativeAmount {
+  color: #dc2626;
+}
+
 .highlight {
   animation: highlightRow 12s ease-out;
 }
