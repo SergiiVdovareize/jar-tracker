@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@sentry/cli": "^2.46.0",
-    "@sentry/react": "^9.27.0",
+    "@sentry/react": "^9.32.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -14,7 +14,7 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
-    "web-vitals": "^5.0.2"
+    "web-vitals": "^5.0.3"
   },
   "scripts": {
     "start": "PORT=3002 react-scripts start",
@@ -45,11 +45,11 @@
     ]
   },
   "devDependencies": {
-    "@eslint/js": "^9.28.0",
-    "eslint": "^9.28.0",
+    "@eslint/js": "^9.29.0",
+    "eslint": "^9.29.0",
     "eslint-plugin-react": "^7.37.5",
     "gh-pages": "^6.3.0",
     "globals": "^16.2.0",
-    "prettier": "^3.5.3"
+    "prettier": "^3.6.1"
   }
 }
