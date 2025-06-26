@@ -14,7 +14,7 @@ function ChangeListItem({ change, previousChange, isNew }) {
 
   const changeInfo = calculateChange(change.balance, previousChange?.balance);
   const classList = [styles.changeAmount];
-  if (changeInfo.amount < 0) {
+  if (changeInfo && changeInfo.amount < 0) {
     classList.push(styles.negativeAmount);
   }
 
