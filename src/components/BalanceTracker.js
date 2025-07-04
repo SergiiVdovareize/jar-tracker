@@ -111,7 +111,14 @@ function BalanceTracker() {
       {changes?.jar?.ownerName ? (
         <h2 className={styles['title']}>
           <span className={styles['owner-name']}>{changes?.jar?.ownerName}</span>
-          <span className={styles['jar-title']}>{changes?.jar?.title}</span>
+          <a
+            href={`https://send.monobank.ua/jar/${balanceId}`}
+            target="_blank"
+            className={styles['jar-title']}
+            rel="noreferrer"
+          >
+            {changes?.jar?.title}
+          </a>
         </h2>
       ) : (
         <h2 className={styles['title']}>Трекер банки</h2>
