@@ -3,6 +3,9 @@
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .owner-name {
@@ -15,8 +18,35 @@
 .jar-title {
   font-size: 1.25rem;
   font-weight: 600;
-  margin-top: 0.4em;
   margin-bottom: 0;
   display: block;
   color: #000;
+}
+
+.jar-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jar-balance {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0d8638;
+}
+
+.jar-goal {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #000;
+  margin-left: 0.3rem;
+}
+
+@media (max-width: 640px) {
+  .jar-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
 }

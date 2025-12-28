@@ -106,20 +106,35 @@ function BalanceTracker() {
     navigate(`/${id}`);
   };
 
+  const toAmount = value => {
+    return `${(value / 100).toLocaleString('uk-UK')} грн.`;
+  };
+
   return (
     <div className="space-y-4">
       {changes?.jar?.ownerName ? (
-        <h2 className={styles['title']}>
-          <span className={styles['owner-name']}>{changes?.jar?.ownerName}</span>
-          <a
-            href={`https://send.monobank.ua/jar/${balanceId}`}
-            target="_blank"
-            className={styles['jar-title']}
-            rel="noreferrer"
-          >
-            {changes?.jar?.title}
-          </a>
-        </h2>
+        <div className={styles['title']}>
+          <div className={styles['owner-name']}>{changes?.jar?.ownerName}</div>
+
+          <div className={styles['jar-details']}>
+            <a
+              href={`https://send.monobank.ua/jar/${balanceId}`}
+              target="_blank"
+              className={styles['jar-title']}
+              rel="noreferrer"
+            >
+              {changes?.jar?.title}
+            </a>
+            {changes?.jar?.balance && (
+              <div className={styles['jar-balance']}>
+                {toAmount(changes.jar.balance)}
+                {!!changes?.jar?.goal && (
+                  <span className={styles['jar-goal']}>/ {toAmount(changes.jar.goal)}</span>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       ) : (
         <h2 className={styles['title']}>Трекер банки</h2>
       )}

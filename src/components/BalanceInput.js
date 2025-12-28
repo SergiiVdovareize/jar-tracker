@@ -13,6 +13,11 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
     onSubmit(inputValue);
   };
 
+  const btnCaption = loading
+    ? 'Завантаження...'
+    : initialValue
+      ? 'Відстежувати іншу'
+      : 'Відстежувати';
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.formWrapper}>
@@ -25,7 +30,7 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
           className={styles.input}
         />
         <button type="submit" className={styles.button} disabled={loading}>
-          {loading ? 'Завантаження...' : 'Відстежувати'}
+          {btnCaption}
         </button>
       </div>
     </form>
