@@ -107,7 +107,7 @@ function BalanceTracker() {
   };
 
   const toAmount = value => {
-    return `${(value / 100).toLocaleString('uk-UK')} грн.`;
+    return `${Math.floor(value / 100).toLocaleString('uk-UK')} грн.`;
   };
 
   return (
