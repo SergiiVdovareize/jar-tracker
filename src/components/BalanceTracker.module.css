@@ -31,6 +31,7 @@
 .jar-status-inactive {
   color: #aeaeae;
   margin-left: 6px;
+  white-space: nowrap;
 }
 
 .jar-status-inactive:hover,
