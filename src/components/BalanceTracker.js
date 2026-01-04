@@ -92,8 +92,10 @@ function BalanceTracker() {
   }, [changes?.jar?.status]);
 
   useEffect(() => {
-    setMetaTheme(isCompleted ? '#0057a4' : '#0d8638');
-  }, [isCompleted]);
+    if (!loading) {
+      setMetaTheme(isCompleted ? '#0057a4' : '#0d8638');
+    }
+  }, [isCompleted, loading]);
 
   useEffect(() => {
     if (loading) {
