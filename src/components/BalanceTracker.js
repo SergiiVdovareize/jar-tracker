@@ -14,6 +14,7 @@ function BalanceTracker() {
   const navigate = useNavigate();
   const [balanceId, setBalanceId] = useState(urlBalanceId || '');
   const [changes, setChanges] = useState([]);
+  const [isCompleted, setIsCompleted] = useState(false);
   const [isTabActive, setIsTabActive] = useState(true);
   const [recentId, setRecentId] = useState(0);
   const [previousRecentId, setPreviousRecentId] = useState(0);
@@ -86,6 +87,22 @@ function BalanceTracker() {
   }, [changes?.incoming?.[0]?.id]);
 
   useEffect(() => {
+    setIsCompleted(changes?.jar?.status?.toLowerCase() === 'closed');
+  }, [changes?.jar?.status]);
+
+  useEffect(() => {
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', isCompleted ? '#0057a4' : '#0d8638');
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = 'theme-color';
+      meta.content = isCompleted ? '#0057a4' : '#0d8638';
+      document.head.appendChild(meta);
+    }
+  }, [isCompleted]);
+
+  useEffect(() => {
     const themeColor = document.querySelector('meta[name="theme-color"]');
     if (themeColor) {
       const color = loading ? '#75847a' : '#0d8638';
@@ -122,7 +139,6 @@ function BalanceTracker() {
     handleFetchChanges(true);
   };
 
-  const isCompleted = changes?.jar?.status?.toLowerCase() === 'closed';
   const needsReactivation = !isCompleted && changes?.account?.isActive === false;
 
   return (
