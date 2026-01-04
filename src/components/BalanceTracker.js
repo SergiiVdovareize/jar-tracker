@@ -110,27 +110,40 @@ function BalanceTracker() {
     return `${Math.floor(value / 100).toLocaleString('uk-UK')} грн.`;
   };
 
+  const jarProgress =
+    changes?.jar?.balance &&
+    changes?.jar?.goal &&
+    Math.min((changes.jar.balance / changes.jar.goal) * 100, 100);
+
   return (
     <div className="space-y-4">
       {changes?.jar?.ownerName ? (
         <div className={styles['title']}>
           <div className={styles['owner-name']}>{changes?.jar?.ownerName}</div>
 
-          <div className={styles['jar-details']}>
-            <a
-              href={`https://send.monobank.ua/jar/${balanceId}`}
-              target="_blank"
-              className={styles['jar-title']}
-              rel="noreferrer"
-            >
-              {changes?.jar?.title}
-            </a>
-            {changes?.jar?.balance && (
-              <div className={styles['jar-balance']}>
-                {toAmount(changes.jar.balance)}
-                {!!changes?.jar?.goal && (
-                  <span className={styles['jar-goal']}>/ {toAmount(changes.jar.goal)}</span>
-                )}
+          <div className={styles['jar-wrapper']}>
+            <div className={styles['jar-details']}>
+              <a
+                href={`https://send.monobank.ua/jar/${balanceId}`}
+                target="_blank"
+                className={styles['jar-title']}
+                rel="noreferrer"
+              >
+                {changes?.jar?.title}
+              </a>
+              {changes?.jar?.balance && (
+                <div className={styles['jar-balance']}>
+                  {toAmount(changes.jar.balance)}
+                  {!!changes?.jar?.goal && (
+                    <span className={styles['jar-goal']}>/ {toAmount(changes.jar.goal)}</span>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {jarProgress && (
+              <div className={styles['jar-progress-wrapper']}>
+                <div className={styles['jar-progress']} style={{ width: `${jarProgress}%` }}></div>
               </div>
             )}
           </div>
