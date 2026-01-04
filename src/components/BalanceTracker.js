@@ -5,6 +5,7 @@ import ChangesList from './ChangesList';
 import styles from './BalanceTracker.module.css';
 import { fetchBalanceChanges } from '../services/balanceService';
 import { saveToLocalStorage, readFromLocalStorage } from '../utils/localStorageHelper';
+import { setMetaTheme } from '../utils/metaHelper';
 
 const FETCH_INTERVAL = 60;
 const FETCH_INTERVAL_MS = FETCH_INTERVAL * 1000;
@@ -91,22 +92,12 @@ function BalanceTracker() {
   }, [changes?.jar?.status]);
 
   useEffect(() => {
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', isCompleted ? '#0057a4' : '#0d8638');
-    } else {
-      const meta = document.createElement('meta');
-      meta.name = 'theme-color';
-      meta.content = isCompleted ? '#0057a4' : '#0d8638';
-      document.head.appendChild(meta);
-    }
+    setMetaTheme(isCompleted ? '#0057a4' : '#0d8638');
   }, [isCompleted]);
 
   useEffect(() => {
-    const themeColor = document.querySelector('meta[name="theme-color"]');
-    if (themeColor) {
-      const color = loading ? '#75847a' : '#0d8638';
-      themeColor.setAttribute('content', color);
+    if (loading) {
+      setMetaTheme('#75847a');
     }
   }, [loading]);
 
