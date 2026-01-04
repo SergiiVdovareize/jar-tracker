@@ -25,6 +25,7 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
           placeholder="уведіть id або посилання банки"
           disabled={loading}
           className={styles.input}
+          name="jarId"
         />
         <button type="submit" className={styles.button} disabled={loading}>
           {btnCaption}

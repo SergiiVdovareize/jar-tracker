@@ -19,8 +19,25 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0;
-  display: block;
   color: #000;
+}
+
+.jar-status-completed {
+  color: #aeaeae;
+  text-decoration: none;
+  margin-left: 6px;
+}
+
+.jar-status-inactive {
+  color: #aeaeae;
+  margin-left: 6px;
+}
+
+.jar-status-inactive:hover,
+.jar-status-inactive:active {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #0b692c;
 }
 
 .jar-wrapper {
@@ -42,6 +59,10 @@
   color: #0d8638;
 }
 
+.jar-balance-completed {
+  color: #0057a4;
+}
+
 .jar-goal {
   font-size: 1.1rem;
   font-weight: 500;
@@ -61,6 +82,10 @@
   height: 100%;
   background-color: #109a40;
   transition: width 0.3s ease;
+}
+
+.jar-progress-completed {
+  background-color: #0057a4;
 }
 
 @media (max-width: 640px) {

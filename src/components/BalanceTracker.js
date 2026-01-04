@@ -19,20 +19,23 @@ function BalanceTracker() {
   const [previousRecentId, setPreviousRecentId] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const handleFetchChanges = useCallback(async () => {
-    try {
-      setLoading(true);
-      const recent = readFromLocalStorage('recent-incoming', balanceId);
-      setPreviousRecentId(recent);
-      setRecentId(recent);
-      const data = await fetchBalanceChanges(balanceId);
-      setChanges(data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error('Failed to fetch balance changes:', error);
-    }
-  }, [balanceId]);
+  const handleFetchChanges = useCallback(
+    async (force = false) => {
+      try {
+        setLoading(true);
+        const recent = readFromLocalStorage('recent-incoming', balanceId);
+        setPreviousRecentId(recent);
+        setRecentId(recent);
+        const data = await fetchBalanceChanges(balanceId, force);
+        setChanges(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error('Failed to fetch balance changes:', error);
+      }
+    },
+    [balanceId]
+  );
 
   useEffect(() => {
     let interval;
@@ -115,6 +118,13 @@ function BalanceTracker() {
     changes?.jar?.goal &&
     Math.min((changes.jar.balance / changes.jar.goal) * 100, 100);
 
+  const reactivate = () => {
+    handleFetchChanges(true);
+  };
+
+  const isCompleted = changes?.jar?.status?.toLowerCase() === 'closed';
+  const needsReactivation = !isCompleted && changes?.account?.isActive === false;
+
   return (
     <div className="space-y-4">
       {changes?.jar?.ownerName ? (
@@ -123,16 +133,27 @@ function BalanceTracker() {
 
           <div className={styles['jar-wrapper']}>
             <div className={styles['jar-details']}>
-              <a
-                href={`https://send.monobank.ua/jar/${balanceId}`}
-                target="_blank"
-                className={styles['jar-title']}
-                rel="noreferrer"
-              >
-                {changes?.jar?.title}
-              </a>
+              <span>
+                <a
+                  href={`https://send.monobank.ua/jar/${balanceId}`}
+                  target="_blank"
+                  className={styles['jar-title']}
+                  rel="noreferrer"
+                >
+                  {changes?.jar?.title}
+                </a>
+                {isCompleted && <span className={styles['jar-status-completed']}>[розбита ✓]</span>}
+
+                {needsReactivation && (
+                  <span className={styles['jar-status-inactive']} onClick={reactivate}>
+                    [неактивна ↻]
+                  </span>
+                )}
+              </span>
               {changes?.jar?.balance && (
-                <div className={styles['jar-balance']}>
+                <div
+                  className={`${styles['jar-balance']} ${isCompleted && styles['jar-balance-completed']}`}
+                >
                   {toAmount(changes.jar.balance)}
                   {!!changes?.jar?.goal && (
                     <span className={styles['jar-goal']}>/ {toAmount(changes.jar.goal)}</span>
@@ -143,7 +164,10 @@ function BalanceTracker() {
 
             {jarProgress && (
               <div className={styles['jar-progress-wrapper']}>
-                <div className={styles['jar-progress']} style={{ width: `${jarProgress}%` }}></div>
+                <div
+                  className={`${styles['jar-progress']} ${isCompleted && styles['jar-progress-completed']}`}
+                  style={{ width: `${jarProgress}%` }}
+                ></div>
               </div>
             )}
           </div>

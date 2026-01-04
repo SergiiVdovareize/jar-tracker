@@ -4,9 +4,9 @@ if (!API_BASE_URL) {
   throw new Error('API URL is not configured. Please check your environment variables.');
 }
 
-export const fetchBalanceChanges = async balanceId => {
+export const fetchBalanceChanges = async (balanceId, force = false) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/track/watch/mono/${balanceId}`);
+    const response = await fetch(`${API_BASE_URL}/track/watch/mono/${balanceId}?force=${force}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
