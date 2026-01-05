@@ -64,11 +64,19 @@
   color: #0057a4;
 }
 
+.jar-balance-loading {
+  color: #75847a;
+}
+
 .jar-goal {
   font-size: 1.1rem;
   font-weight: 500;
   color: #000;
   margin-left: 0.3rem;
+}
+
+.jar-balance-loading .jar-goal {
+  color: #75847a;
 }
 
 .jar-progress-wrapper {
@@ -87,6 +95,10 @@
 
 .jar-progress-completed {
   background-color: #0057a4;
+}
+
+.jar-progress-loading {
+  background-color: #75847a;
 }
 
 @media (max-width: 640px) {

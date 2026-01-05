@@ -161,7 +161,7 @@ function BalanceTracker() {
               </span>
               {changes?.jar?.balance && (
                 <div
-                  className={`${styles['jar-balance']} ${isCompleted && styles['jar-balance-completed']}`}
+                  className={`${styles['jar-balance']} ${isCompleted && styles['jar-balance-completed']} ${loading && styles['jar-balance-loading']}`}
                 >
                   {toAmount(changes.jar.balance)}
                   {!!changes?.jar?.goal && (
@@ -174,7 +174,7 @@ function BalanceTracker() {
             {jarProgress && (
               <div className={styles['jar-progress-wrapper']}>
                 <div
-                  className={`${styles['jar-progress']} ${isCompleted && styles['jar-progress-completed']}`}
+                  className={`${styles['jar-progress']} ${isCompleted && styles['jar-progress-completed']} ${loading && styles['jar-progress-loading']}`}
                   style={{ width: `${jarProgress}%` }}
                 ></div>
               </div>
