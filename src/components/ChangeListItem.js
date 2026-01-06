@@ -23,7 +23,7 @@ function ChangeListItem({ change, previousChange, isNew }) {
       <div className={styles.changeContent}>
         <div>
           <p className={styles.timestamp}>{formatDate(change.trackedAt)}</p>
-          <p className={styles.balance}>{formatBalance(change.balance)}.</p>
+          <p className={styles.balance}>{formatBalance(change.balance)}</p>
         </div>
         {changeInfo && (
           <div className={classList.join(' ')}>

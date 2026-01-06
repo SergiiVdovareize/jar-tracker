@@ -23,5 +23,5 @@ export const formatBalance = balance => {
     currency: 'UAH',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(balance / 100); // Convert from cents to UAH
+  }).format(balance / 100) + '.'; // Convert from cents to UAH
 };

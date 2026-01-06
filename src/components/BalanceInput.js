@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './BalanceInput.module.css';
 
 function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
   const [inputValue, setInputValue] = useState(initialValue);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     setInputValue(initialValue);
   }, [initialValue]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -19,6 +24,7 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.formWrapper}>
         <input
+          ref={inputRef}
           type="text"
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
