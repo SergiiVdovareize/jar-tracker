@@ -19,7 +19,6 @@
   font-size: 1rem;
   width: 70%;
   box-sizing: border-box;
-  font-family: 'Roboto Slab', serif;
 }
 
 .input:focus {
@@ -38,7 +37,6 @@
   border: none;
   font-size: 1rem;
   font-weight: bold;
-  font-family: 'Roboto Slab', serif;
 }
 
 .button:hover {
