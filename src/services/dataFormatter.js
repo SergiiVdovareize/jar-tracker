@@ -18,10 +18,12 @@ export const formatDate = dateString => {
 };
 
 export const formatBalance = balance => {
-  return new Intl.NumberFormat('uk-UA', {
-    style: 'currency',
-    currency: 'UAH',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(balance / 100) + '.'; // Convert from cents to UAH
+  return (
+    new Intl.NumberFormat('uk-UA', {
+      style: 'currency',
+      currency: 'UAH',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(balance / 100) + '.'
+  ); // Convert from cents to UAH
 };
