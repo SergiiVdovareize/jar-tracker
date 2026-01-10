@@ -3,6 +3,7 @@ import styles from './BalanceInput.module.css';
 
 function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
   const [inputValue, setInputValue] = useState(initialValue);
+  const [isClipboardAvailable, setIsClipboardAvailable] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -11,6 +12,41 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
 
   useEffect(() => {
     inputRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const checkClipboard = async () => {
+      // Basic check for API existence
+      if (!navigator.clipboard || !navigator.clipboard.readText) {
+        setIsClipboardAvailable(false);
+        return;
+      }
+
+      // Permission check
+      if (navigator.permissions && navigator.permissions.query) {
+        try {
+          const permissionStatus = await navigator.permissions.query({
+            name: 'clipboard-read',
+          });
+          setIsClipboardAvailable(
+            permissionStatus.state === 'granted' || permissionStatus.state === 'prompt'
+          );
+
+          permissionStatus.onchange = () => {
+             setIsClipboardAvailable(
+              permissionStatus.state === 'granted' || permissionStatus.state === 'prompt'
+            );
+          };
+        } catch (error) {
+          // Fallback if query fails but API exists (e.g. Firefox)
+           setIsClipboardAvailable(true);
+        }
+      } else {
+        // Fallback checks if perm API missing
+        setIsClipboardAvailable(true);
+      }
+    };
+    checkClipboard();
   }, []);
 
   const handleSubmit = e => {
@@ -45,15 +81,15 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
           name="jarId"
         />
         <div className={styles.buttonWrapper}>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.pasteButton}`}
-            onClick={handlePaste}
-            disabled={loading}
-            title="Вставити і відстежити"
-          >
-            
-          </button>
+          {isClipboardAvailable && (
+            <button
+              type="button"
+              className={`${styles.button} ${styles.pasteButton}`}
+              onClick={handlePaste}
+              disabled={loading}
+              title="Вставити і відстежити"
+            />
+          )}
           <button type="submit" className={`${styles.button} ${styles.submitButton}`} disabled={loading}>
             {btnCaption}
           </button>
