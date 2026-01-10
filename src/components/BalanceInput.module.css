@@ -23,8 +23,7 @@
 
 .input:focus {
   outline: none;
-  border-color: #01521e;
-  box-shadow: 0 0 2px 2px #01521e34;
+  box-shadow: 0 0 2px 2px #13863c75;
 }
 
 .button {
