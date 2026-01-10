@@ -18,6 +18,17 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
     onSubmit(inputValue);
   };
 
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      console.log(text);
+      setInputValue(text);
+      onSubmit(text);
+    } catch (err) {
+      console.error('Failed to read clipboard contents: ', err);
+    }
+  };
+
   const btnCaption = loading ? 'Завантаження...' : 'Відстежувати';
 
   return (
@@ -33,9 +44,20 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
           className={styles.input}
           name="jarId"
         />
-        <button type="submit" className={styles.button} disabled={loading}>
-          {btnCaption}
-        </button>
+        <div className={styles.buttonWrapper}>
+          <button
+            type="button"
+            className={`${styles.button} ${styles.pasteButton}`}
+            onClick={handlePaste}
+            disabled={loading}
+            title="Вставити і відстежити"
+          >
+            
+          </button>
+          <button type="submit" className={`${styles.button} ${styles.submitButton}`} disabled={loading}>
+            {btnCaption}
+          </button>
+        </div>
       </div>
     </form>
   );
