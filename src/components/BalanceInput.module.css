@@ -25,10 +25,8 @@
   border-radius: 4px;
   font-size: 1rem;
   flex: 1;
-  /* Take remaining space */
   box-sizing: border-box;
   min-width: 0;
-  /* Prevent overflow */
 }
 
 .input:focus {
@@ -64,12 +62,6 @@
 }
 
 .pasteButton {
-  /* background-color: #f0f0f0; */
-  /* border: 1px solid #ccc; */
-  /* border-radius: 4px; */
-  /* padding: 0; */
-  /* width: 46px; */
-  /* Rough estimate to make it square with standard line height/padding */
   height: auto;
   display: flex;
   align-items: center;
@@ -77,19 +69,6 @@
   cursor: pointer;
   font-size: 1.2rem;
   flex-shrink: 0;
-}
-
-/* .pasteButton::before {
-  content: '⇐';
-} */
-
-/* .pasteButton:hover {
-  background-color: #e0e0e0;
-} */
-
-.pasteButton:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .submitButton {
@@ -104,8 +83,4 @@
   .input {
     width: 100%;
   }
-
-  /* .pasteButton::before {
-    content: '⇧';
-  } */
 }
