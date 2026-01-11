@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './BalanceInput.module.css';
 import useActiveTab from '../hooks/useActiveTab';
+import useClipboardPermission from '../hooks/useClipboardPermission';
 import { JAR_PATTERN } from '../utils/constants';
+import { Clipboard, SquareActivity } from 'lucide-react';
 
 function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
   const [inputValue, setInputValue] = useState(initialValue);
-  const [isClipboardAvailable, setIsClipboardAvailable] = useState(false);
+  const { isClipboardGranted, isClipboardDenied } = useClipboardPermission();
   const [isPasteEnabled, setIsPasteEnabled] = useState(true);
+  const [isClipboardButtonAvailable, setIsClipboardButtonAvailable] = useState(true);
   const inputRef = useRef(null);
   const isTabActive = useActiveTab();
 
@@ -15,7 +18,7 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
   }, [initialValue]);
 
   useEffect(() => {
-    if (isTabActive && isClipboardAvailable) {
+    if (isTabActive && isClipboardGranted) {
       navigator.clipboard
         .readText()
         .then(clipboard => {
@@ -25,47 +28,15 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
           console.error('Failed to read clipboard contents: ', err);
         });
     }
-  }, [isTabActive]);
+  }, [isTabActive, isClipboardGranted]);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
   useEffect(() => {
-    const checkClipboard = async () => {
-      // Basic check for API existence
-      if (!navigator.clipboard || !navigator.clipboard.readText) {
-        setIsClipboardAvailable(false);
-        return;
-      }
-
-      // Permission check
-      if (navigator.permissions && navigator.permissions.query) {
-        try {
-          const permissionStatus = await navigator.permissions.query({
-            name: 'clipboard-read',
-          });
-          setIsClipboardAvailable(
-            permissionStatus.state === 'granted' || permissionStatus.state === 'prompt'
-          );
-
-          permissionStatus.onchange = () => {
-            setIsClipboardAvailable(
-              permissionStatus.state === 'granted' || permissionStatus.state === 'prompt'
-            );
-          };
-        } catch (error) {
-          // Fallback if query fails but API exists (e.g. Firefox)
-          console.error('Failed to query clipboard permissions: ', error);
-          setIsClipboardAvailable(true);
-        }
-      } else {
-        // Fallback checks if perm API missing
-        setIsClipboardAvailable(true);
-      }
-    };
-    checkClipboard();
-  }, []);
+    setIsClipboardButtonAvailable(!isClipboardDenied);
+  }, [isClipboardDenied]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -99,20 +70,23 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
           name="jarId"
         />
         <div className={styles.buttonWrapper}>
-          {isClipboardAvailable && (
+          {isClipboardButtonAvailable && (
             <button
               type="button"
               className={`${styles.button} ${styles.pasteButton}`}
               onClick={handlePaste}
               disabled={loading || !isPasteEnabled}
               title="Вставити і відстежити"
-            />
+            >
+              <Clipboard />
+            </button>
           )}
           <button
             type="submit"
             className={`${styles.button} ${styles.submitButton}`}
             disabled={loading}
           >
+            <SquareActivity />
             {btnCaption}
           </button>
         </div>

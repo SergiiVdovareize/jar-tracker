@@ -47,6 +47,11 @@
   font-weight: bold;
   cursor: pointer;
   white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .button:hover {
@@ -74,13 +79,13 @@
   flex-shrink: 0;
 }
 
-.pasteButton::before {
+/* .pasteButton::before {
   content: '⇐';
-}
+} */
 
-.pasteButton:hover {
+/* .pasteButton:hover {
   background-color: #e0e0e0;
-}
+} */
 
 .pasteButton:disabled {
   opacity: 0.6;
@@ -100,7 +105,7 @@
     width: 100%;
   }
 
-  .pasteButton::before {
+  /* .pasteButton::before {
     content: '⇧';
-  }
+  } */
 }
