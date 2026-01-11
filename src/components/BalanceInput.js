@@ -1,14 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './BalanceInput.module.css';
+import useActiveTab from '../hooks/useActiveTab';
+import { JAR_PATTERN } from '../utils/constants';
 
 function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
   const [inputValue, setInputValue] = useState(initialValue);
   const [isClipboardAvailable, setIsClipboardAvailable] = useState(false);
+  const [isPasteEnabled, setIsPasteEnabled] = useState(true);
   const inputRef = useRef(null);
+  const isTabActive = useActiveTab();
 
   useEffect(() => {
     setInputValue(initialValue);
   }, [initialValue]);
+
+  useEffect(() => {
+    if (isTabActive && isClipboardAvailable) {
+      navigator.clipboard
+        .readText()
+        .then(clipboard => {
+          setIsPasteEnabled(clipboard.match(JAR_PATTERN));
+        })
+        .catch(err => {
+          console.error('Failed to read clipboard contents: ', err);
+        });
+    }
+  }, [isTabActive]);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -33,13 +50,14 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
           );
 
           permissionStatus.onchange = () => {
-             setIsClipboardAvailable(
+            setIsClipboardAvailable(
               permissionStatus.state === 'granted' || permissionStatus.state === 'prompt'
             );
           };
         } catch (error) {
           // Fallback if query fails but API exists (e.g. Firefox)
-           setIsClipboardAvailable(true);
+          console.error('Failed to query clipboard permissions: ', error);
+          setIsClipboardAvailable(true);
         }
       } else {
         // Fallback checks if perm API missing
@@ -56,10 +74,10 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
 
   const handlePaste = async () => {
     try {
-      const text = await navigator.clipboard.readText();
-      console.log(text);
-      setInputValue(text);
-      onSubmit(text);
+      navigator.clipboard.readText().then(clipboard => {
+        setInputValue(clipboard);
+        onSubmit(clipboard);
+      });
     } catch (err) {
       console.error('Failed to read clipboard contents: ', err);
     }
@@ -86,11 +104,15 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
               type="button"
               className={`${styles.button} ${styles.pasteButton}`}
               onClick={handlePaste}
-              disabled={loading}
+              disabled={loading || !isPasteEnabled}
               title="Вставити і відстежити"
             />
           )}
-          <button type="submit" className={`${styles.button} ${styles.submitButton}`} disabled={loading}>
+          <button
+            type="submit"
+            className={`${styles.button} ${styles.submitButton}`}
+            disabled={loading}
+          >
             {btnCaption}
           </button>
         </div>
