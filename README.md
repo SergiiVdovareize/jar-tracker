@@ -31,17 +31,13 @@ Jar Tracker is a monitoring tool designed to track and visualize the donation dy
 
 ## Technical Stack
 
-### Backend
+### Layers
 - **Framework**: NestJS - A progressive Node.js framework for building efficient and scalable server-side applications
 - **Database**: PostgreSQL - Robust relational database for storing jar tracking data
 - **ORM**: Prisma - Next-generation ORM for type-safe database access
 - **Deployment**: Vercel - Serverless deployment platform for the API server
-
-### Caching Layer
-- **Service**: Upstash - Redis-compatible caching using a cascade of Upstash profiles for optimized performance
-
-### Background Jobs
-- **Cron Jobs**: Custom script deployed separately on Render.com for scheduled balance checking and data updates
+- **Cache**: Upstash - Redis-compatible caching using a cascade of Upstash profiles for optimized performance
+- **Cron**: Custom script deployed separately on Render.com for scheduled balance checking and data updates
 
 ### Architecture
 The application uses a distributed architecture to leverage free-tier resources:
