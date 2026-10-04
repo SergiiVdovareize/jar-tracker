@@ -45,10 +45,9 @@ function BalanceInput({ onSubmit, initialValue = '', loading = false }) {
 
   const handlePaste = async () => {
     try {
-      navigator.clipboard.readText().then(clipboard => {
-        setInputValue(clipboard);
-        onSubmit(clipboard);
-      });
+      const clipboard = await navigator.clipboard.readText();
+      setInputValue(clipboard);
+      onSubmit(clipboard);
     } catch (err) {
       console.error('Failed to read clipboard contents: ', err);
     }
