@@ -8,6 +8,7 @@ jest.mock('./services/balanceService', () => ({
     account: null,
     incoming: [],
   }),
+  deactivateTrack: jest.fn().mockResolvedValue({ success: true }),
 }));
 
 describe('App', () => {

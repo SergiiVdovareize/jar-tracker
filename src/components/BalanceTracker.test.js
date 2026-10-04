@@ -12,6 +12,7 @@ describe('BalanceTracker', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
+    balanceService.deactivateTrack.mockResolvedValue({ success: true });
   });
 
   const renderComponent = (initialPath = '/') => {
@@ -90,6 +91,7 @@ describe('BalanceTracker', () => {
 
     await waitFor(() => {
       expect(screen.getByText('[розбита ✓]')).toBeInTheDocument();
+      expect(balanceService.deactivateTrack).toHaveBeenCalledWith('closedJar1');
     });
 
     expect(metaHelper.setMetaTheme).toHaveBeenCalledWith('#0057a4');

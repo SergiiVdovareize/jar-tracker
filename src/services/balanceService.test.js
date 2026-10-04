@@ -1,4 +1,4 @@
-import { fetchBalanceChanges } from './balanceService';
+import { fetchBalanceChanges, deactivateTrack } from './balanceService';
 
 describe('balanceService', () => {
   const originalFetch = global.fetch;
@@ -12,64 +12,113 @@ describe('balanceService', () => {
     global.fetch = originalFetch;
   });
 
-  it('fetches balance changes with default force=false and returns watch data', async () => {
-    const mockWatchData = {
-      jar: { title: 'Test Jar', balance: 50000 },
-      incoming: [{ id: 1, balance: 50000 }],
-    };
+  describe('fetchBalanceChanges', () => {
+    it('fetches balance changes with default force=false and returns watch data', async () => {
+      const mockWatchData = {
+        jar: { title: 'Test Jar', balance: 50000 },
+        incoming: [{ id: 1, balance: 50000 }],
+      };
 
-    global.fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ success: true, watch: mockWatchData }),
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, watch: mockWatchData }),
+      });
+
+      const result = await fetchBalanceChanges('testBalanceId');
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        `${process.env.REACT_APP_API_URL}/track/watch/mono/testBalanceId?force=false`
+      );
+      expect(result).toEqual(mockWatchData);
     });
 
-    const result = await fetchBalanceChanges('testBalanceId');
+    it('fetches balance changes with force=true when specified', async () => {
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true, watch: { id: 'forced' } }),
+      });
 
-    expect(global.fetch).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_URL}/track/watch/mono/testBalanceId?force=false`
-    );
-    expect(result).toEqual(mockWatchData);
+      const result = await fetchBalanceChanges('testBalanceId', true);
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        `${process.env.REACT_APP_API_URL}/track/watch/mono/testBalanceId?force=true`
+      );
+      expect(result).toEqual({ id: 'forced' });
+    });
+
+    it('throws an error when HTTP status is not ok', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      global.fetch.mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+      });
+
+      await expect(fetchBalanceChanges('invalidId')).rejects.toThrow('HTTP error! status: 404');
+      expect(consoleErrorSpy).toHaveBeenCalled();
+
+      consoleErrorSpy.mockRestore();
+    });
+
+    it('throws an error when data.success is false', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: false }),
+      });
+
+      await expect(fetchBalanceChanges('someId')).rejects.toThrow('API request was not successful');
+      expect(consoleErrorSpy).toHaveBeenCalled();
+
+      consoleErrorSpy.mockRestore();
+    });
   });
 
-  it('fetches balance changes with force=true when specified', async () => {
-    global.fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ success: true, watch: { id: 'forced' } }),
+  describe('deactivateTrack', () => {
+    it('sends POST request to deactivate endpoint and returns result', async () => {
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: true }),
+      });
+
+      const result = await deactivateTrack('track123');
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        `${process.env.REACT_APP_API_URL}/track/deactivate/track123`,
+        {
+          method: 'POST',
+        }
+      );
+      expect(result).toEqual({ success: true });
     });
 
-    const result = await fetchBalanceChanges('testBalanceId', true);
+    it('throws an error when HTTP status is not ok', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    expect(global.fetch).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_URL}/track/watch/mono/testBalanceId?force=true`
-    );
-    expect(result).toEqual({ id: 'forced' });
-  });
+      global.fetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+      });
 
-  it('throws an error when HTTP status is not ok', async () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      await expect(deactivateTrack('track123')).rejects.toThrow('HTTP error! status: 500');
+      expect(consoleErrorSpy).toHaveBeenCalled();
 
-    global.fetch.mockResolvedValueOnce({
-      ok: false,
-      status: 404,
+      consoleErrorSpy.mockRestore();
     });
 
-    await expect(fetchBalanceChanges('invalidId')).rejects.toThrow('HTTP error! status: 404');
-    expect(consoleErrorSpy).toHaveBeenCalled();
+    it('throws an error when data.success is false', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    consoleErrorSpy.mockRestore();
-  });
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ success: false }),
+      });
 
-  it('throws an error when data.success is false', async () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      await expect(deactivateTrack('track123')).rejects.toThrow('API request was not successful');
+      expect(consoleErrorSpy).toHaveBeenCalled();
 
-    global.fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ success: false }),
+      consoleErrorSpy.mockRestore();
     });
-
-    await expect(fetchBalanceChanges('someId')).rejects.toThrow('API request was not successful');
-    expect(consoleErrorSpy).toHaveBeenCalled();
-
-    consoleErrorSpy.mockRestore();
   });
 });

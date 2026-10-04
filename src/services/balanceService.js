@@ -20,3 +20,22 @@ export const fetchBalanceChanges = async (balanceId, force = false) => {
     throw error;
   }
 };
+
+export const deactivateTrack = async trackId => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/track/deactivate/${trackId}`, {
+      method: 'POST',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    if (!data.success) {
+      throw new Error('API request was not successful');
+    }
+    return data;
+  } catch (error) {
+    console.error('Error deactivating track:', error);
+    throw error;
+  }
+};

@@ -4,7 +4,7 @@ import { JAR_PATTERN } from '../utils/constants';
 import BalanceInput from './BalanceInput';
 import ChangesList from './ChangesList';
 import styles from './BalanceTracker.module.css';
-import { fetchBalanceChanges } from '../services/balanceService';
+import { fetchBalanceChanges, deactivateTrack } from '../services/balanceService';
 import { saveToLocalStorage, readFromLocalStorage } from '../utils/localStorageHelper';
 import { setMetaTheme } from '../utils/metaHelper';
 import useActiveTab from '../hooks/useActiveTab';
@@ -78,8 +78,15 @@ function BalanceTracker() {
   }, [changes?.incoming?.[0]?.id]);
 
   useEffect(() => {
-    setIsCompleted(changes?.jar?.status?.toLowerCase() === 'closed');
-  }, [changes?.jar?.status]);
+    const isClosed = changes?.jar?.status?.toLowerCase() === 'closed';
+    setIsCompleted(isClosed);
+
+    if (isClosed && changes?.account?.isActive && changes?.account?.trackId) {
+      deactivateTrack(changes.account.trackId).catch(error => {
+        console.error('Failed to deactivate completed jar track:', error);
+      });
+    }
+  }, [changes?.jar?.status, changes?.account?.isActive, changes?.account?.trackId]);
 
   useEffect(() => {
     if (!loading) {
